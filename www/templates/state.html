@@ -1,0 +1,31 @@
+<ion-view view-title="State">
+  <ion-content ng-controller="MyCtrl" padding="true">
+    <div class="list">
+        <form class="form-inline" name="form">
+      <label class="item item-input item-select">
+        <label for="country" class="control-label">Country</label>
+        <select name='country' id="country" class="form-control" ng-model="country" ng-options="country as country.CountryName for country in countries"
+          required>
+          <option value="" disabled>Select</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <label for="state" class="control-label">State</label>
+        <select name='state' required id="state" class="form-control" ng-disabled="states.length == 0" ng-model="state" ng-options="state as state.StateName for state in states">
+          <option value="" disabled>Select</option>
+        </select>
+      </label> 
+       <label class="item item-input item-select">
+        <label for="country" class="control-label">Country</label>
+        <label for="city" class="control-label">City</label>
+        <select name='city' required id="city" class="form-control" ng-disabled="cities.length == 0" ng-model="city" ng-options="city as city.CityName for city in cities">
+          <option value="" disabled>Select</option>
+        </select>
+      </label>
+    </form>
+    </div>
+
+    <p>Selected country:{{country.CountryName}}</p>
+    <p>Selected state:  {{state.StateName}}</p>
+    <p>Selected state: {{city.CityName}}</p>
+  </ion-content>
