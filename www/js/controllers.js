@@ -1,6 +1,6 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ngCordova'])
 
-    .controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
+    .controller('AppCtrl', function ($scope, $http, $ionicModal, $timeout) {
 
         // With the new view caching in Ionic, Controllers are only called
         // when they are recreated or on app start, instead of every page change.
@@ -51,6 +51,56 @@ angular.module('starter.controllers', [])
         ];
     })
 
+
+    .factory('PersonService', function ($http) {
+        var BASE_URL = "http://api.randomuser.me/";
+        var items = [];
+
+        return {
+            GetFeed: function () {
+                return $http.get(BASE_URL + '?results=10').then(function (response) {
+                    items = response.data.results;
+
+                    return items;
+                });
+            },
+            GetNewUsers: function () {
+                return $http.get(BASE_URL + '?results=10').then(function (response) {
+                    items = response.data.results;
+                    return items;
+                });
+            }
+        }
+    })
+
+    .controller('ScrollcntrL', function ($scope, $timeout, PersonService) {
+        $scope.items = [];
+
+        PersonService.GetFeed().then(function (items) {
+            $scope.items = items;
+        });
+
+        $scope.loadMore = function () {
+            PersonService.GetNewUsers().then(function (items) {
+                $scope.items = $scope.items.concat(items);
+
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            });
+        };
+
+    })
+
+    .controller('printCtrl', function ($scope ,  $cordovaPrinter) {
+        
+        $scope.print = function () {
+            var printerAvail = $cordovaPrinter.isAvailable()
+            
+              var doc = "<html>  Wikipedia is a free online encyclopedia with the mission of allowing anyone to edit articles. Wikipedia is the largest and most popular general reference work on the Internet, and is ranked the fifth-most popular website. Wikipedia </html>";
+              $cordovaPrinter.print(doc)
+            
+        };
+
+    })
 
     .controller('MyCtrl', function ($scope) {
         $scope.country = {};

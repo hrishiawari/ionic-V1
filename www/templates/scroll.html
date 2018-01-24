@@ -1,0 +1,13 @@
+<ion-view view-title="Scroll">
+  <ion-content ng-controller="ScrollcntrL">
+    <ion-list>
+      <ion-item class="item-avatar" ng-repeat="item in items">
+        <img src="{{item.picture.thumbnail}} " />
+        <h2>{{item.name.first}} {{item.name.last}}</h2>
+        <p>{{item.location.city}} {{item.password}}</p>
+      </ion-item>
+    </ion-list>
+    
+    <ion-infinite-scroll on-infinite="loadMore()" distance="5%"></ion-infinite-scroll>
+  </ion-content>
+</ion-view>
